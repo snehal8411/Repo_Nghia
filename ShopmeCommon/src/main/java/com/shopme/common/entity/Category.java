@@ -91,6 +91,13 @@ public class Category {
 		this.parent = parent;
 	}	
 
+	public Category(Integer id, String name, String alias) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.alias = alias;
+	}
+
 	public Integer getId() {
 		return id;
 	}
