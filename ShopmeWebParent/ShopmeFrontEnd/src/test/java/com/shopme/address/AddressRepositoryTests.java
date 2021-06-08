@@ -30,13 +30,14 @@ public class AddressRepositoryTests {
 		Address newAddress = new Address();
 		newAddress.setCustomer(new Customer(customerId));
 		newAddress.setCountry(new Country(countryId));
-		newAddress.setFirstName("Charles");
-		newAddress.setLastName("Brugger");
-		newAddress.setPhoneNumber("646-232-3902");
-		newAddress.setAddressLine1("204 Morningview Lane");
-		newAddress.setCity("New York");
-		newAddress.setState("New York");
-		newAddress.setPostalCode("10013");
+		newAddress.setFirstName("Tobie");
+		newAddress.setLastName("Abel");
+		newAddress.setPhoneNumber("19094644165");
+		newAddress.setAddressLine1("4213 Gordon Street");
+		newAddress.setAddressLine2("Novak Building");
+		newAddress.setCity("Chino");
+		newAddress.setState("California");
+		newAddress.setPostalCode("91710");
 		
 		Address savedAddress = repo.save(newAddress);
 		
