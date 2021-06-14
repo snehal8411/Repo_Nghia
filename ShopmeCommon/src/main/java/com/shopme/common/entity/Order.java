@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "orders")
@@ -269,5 +270,12 @@ public class Order {
 				+ ", customer=" + customer.getFullName() + "]";
 	}
 	
-	
+	@Transient
+	public String getDestination() {
+		String destination =  city + ", ";
+		if (state != null && !state.isEmpty()) destination += state + ", ";
+		destination += country;
+		
+		return destination;
+	}
 }
