@@ -103,6 +103,7 @@ public class ProductController {
 		model.addAttribute("pageTitle", keyword + " - Search Result");
 		
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("searchKeyword", keyword);
 		model.addAttribute("listResult", listResult);
 		
 		return "product/search_result";

@@ -29,11 +29,11 @@ public class OrderController {
 	@GetMapping("/orders/page/{pageNum}")
 	public String listOrdersByPage(Model model, HttpServletRequest request,
 						@PathVariable(name = "pageNum") int pageNum,
-						String sortField, String sortDir, String orderKeyword
+						String sortField, String sortDir, String keyword
 			) {
 		Customer customer = getAuthenticatedCustomer(request);
 		
-		Page<Order> page = orderService.listForCustomerByPage(customer, pageNum, sortField, sortDir, orderKeyword);
+		Page<Order> page = orderService.listForCustomerByPage(customer, pageNum, sortField, sortDir, keyword);
 		List<Order> listOrders = page.getContent();
 		
 		model.addAttribute("totalPages", page.getTotalPages());
@@ -42,7 +42,7 @@ public class OrderController {
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("orderKeyword", orderKeyword);
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("moduleURL", "/orders");
 		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 		
