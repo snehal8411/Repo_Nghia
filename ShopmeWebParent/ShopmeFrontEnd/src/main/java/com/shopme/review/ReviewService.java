@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.shopme.common.entity.Customer;
 import com.shopme.common.entity.Review;
+import com.shopme.common.entity.product.Product;
 import com.shopme.common.exception.ReviewNotFoundException;
 
 @Service
@@ -38,4 +39,11 @@ public class ReviewService {
 		
 		return review;
 	}
+	
+	public Page<Review> list3MostRecentReviewsByProduct(Product product) {
+		Sort sort = Sort.by("reviewTime").descending();
+		Pageable pageable = PageRequest.of(0, 3, sort);
+		
+		return repo.findByProduct(product, pageable);		
+	}	
 }

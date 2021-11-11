@@ -319,5 +319,9 @@ public class Product extends IdBasedEntity {
 	public void setAverageRating(float averageRating) {
 		this.averageRating = averageRating;
 	}
-		
+	
+	@Transient
+	public String getURI() {
+		return "/p/" + this.alias + "/";
+	}		
 }
