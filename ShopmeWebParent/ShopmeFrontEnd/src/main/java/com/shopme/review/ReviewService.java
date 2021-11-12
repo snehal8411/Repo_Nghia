@@ -45,5 +45,14 @@ public class ReviewService {
 		Pageable pageable = PageRequest.of(0, 3, sort);
 		
 		return repo.findByProduct(product, pageable);		
-	}	
+	}
+	
+	public Page<Review> listByProduct(Product product, int pageNum, String sortField, String sortDir) {
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending(); 
+		Pageable pageable = PageRequest.of(pageNum - 1, REVIEWS_PER_PAGE, sort);
+		
+		return repo.findByProduct(product, pageable);
+	}
+	
 }
