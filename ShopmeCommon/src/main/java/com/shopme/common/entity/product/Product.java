@@ -80,6 +80,9 @@ public class Product extends IdBasedEntity {
 	private int reviewCount;
 	private float averageRating;
 	
+	@Transient private boolean customerCanReview;
+	@Transient private boolean reviewedByCustomer;
+	
 	public Product(Integer id) {
 		this.id = id;
 	}
@@ -323,5 +326,23 @@ public class Product extends IdBasedEntity {
 	@Transient
 	public String getURI() {
 		return "/p/" + this.alias + "/";
-	}		
+	}
+
+	public boolean isCustomerCanReview() {
+		return customerCanReview;
+	}
+
+	public void setCustomerCanReview(boolean customerCanReview) {
+		this.customerCanReview = customerCanReview;
+	}
+
+	public boolean isReviewedByCustomer() {
+		return reviewedByCustomer;
+	}
+
+	public void setReviewedByCustomer(boolean reviewedByCustomer) {
+		this.reviewedByCustomer = reviewedByCustomer;
+	}
+	
+	
 }
