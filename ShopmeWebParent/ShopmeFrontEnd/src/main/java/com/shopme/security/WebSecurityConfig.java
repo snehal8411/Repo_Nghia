@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/account_details", "/update_account_details", "/orders/**",
 					"/cart", "/address_book/**", "/checkout", "/place_order", "/reviews/**", 
-					"/process_paypal_order", "/write_review/**").authenticated()
+					"/process_paypal_order", "/write_review/**", "/post_review").authenticated()
 			.anyRequest().permitAll()
 			.and()
 			.formLogin()
