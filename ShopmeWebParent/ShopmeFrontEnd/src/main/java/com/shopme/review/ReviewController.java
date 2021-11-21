@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.shopme.Utility;
+import com.shopme.ControllerHelper;
 import com.shopme.common.entity.Customer;
 import com.shopme.common.entity.Review;
 import com.shopme.common.entity.product.Product;
 import com.shopme.common.exception.ProductNotFoundException;
 import com.shopme.common.exception.ReviewNotFoundException;
-import com.shopme.customer.CustomerService;
 import com.shopme.product.ProductService;
 
 @Controller
@@ -27,7 +26,7 @@ public class ReviewController {
 	private String defaultRedirectURL = "redirect:/reviews/page/1?sortField=reviewTime&sortDir=desc";
 	
 	@Autowired private ReviewService reviewService;
-	@Autowired private CustomerService customerService;
+	@Autowired private ControllerHelper controllerHelper;
 	@Autowired private ProductService productService;
 	
 	@GetMapping("/reviews")
@@ -39,7 +38,7 @@ public class ReviewController {
 	public String listReviewsByCustomerByPage(Model model, HttpServletRequest request,
 							@PathVariable(name = "pageNum") int pageNum,
 							String keyword, String sortField, String sortDir) {
-		Customer customer = getAuthenticatedCustomer(request);
+		Customer customer = controllerHelper.getAuthenticatedCustomer(request);
 		Page<Review> page = reviewService.listByCustomerByPage(customer, keyword, pageNum, sortField, sortDir);		
 		List<Review> listReviews = page.getContent();
 		
@@ -66,16 +65,11 @@ public class ReviewController {
 		
 		return "reviews/reviews_customer";
 	}
-
-	private Customer getAuthenticatedCustomer(HttpServletRequest request) {
-		String email = Utility.getEmailOfAuthenticatedCustomer(request);				
-		return customerService.getCustomerByEmail(email);
-	}
 	
 	@GetMapping("/reviews/detail/{id}")
 	public String viewReview(@PathVariable("id") Integer id, Model model, 
 			RedirectAttributes ra, HttpServletRequest request) {
-		Customer customer = getAuthenticatedCustomer(request);
+		Customer customer = controllerHelper.getAuthenticatedCustomer(request);
 		try {
 			Review review = reviewService.getByCustomerAndId(customer, id);
 			model.addAttribute("review", review);
@@ -147,7 +141,7 @@ public class ReviewController {
 			return "error/404";
 		}
 		
-		Customer customer = getAuthenticatedCustomer(request);
+		Customer customer = controllerHelper.getAuthenticatedCustomer(request);
 		boolean customerReviewed = reviewService.didCustomerReviewProduct(customer, product.getId());
 		
 		if (customerReviewed) {
@@ -170,7 +164,7 @@ public class ReviewController {
 	
 	@PostMapping("/post_review")
 	public String saveReview(Model model, Review review, Integer productId, HttpServletRequest request) {
-		Customer customer = getAuthenticatedCustomer(request);
+		Customer customer = controllerHelper.getAuthenticatedCustomer(request);
 		
 		Product product = null;
 		
