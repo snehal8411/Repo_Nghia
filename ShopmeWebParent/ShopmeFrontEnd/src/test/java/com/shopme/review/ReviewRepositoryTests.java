@@ -12,12 +12,14 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.Rollback;
 
 import com.shopme.common.entity.Review;
 import com.shopme.common.entity.product.Product;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
+@Rollback(false)
 public class ReviewRepositoryTests {
 	
 	@Autowired private ReviewRepository repo;
@@ -73,5 +75,14 @@ public class ReviewRepositoryTests {
 		Long count = repo.countByCustomerAndProduct(customerId, productId);
 		
 		assertThat(count).isEqualTo(1);
+	}
+	
+	@Test
+	public void testUpdateVoteCount() {
+		Integer reviewId = 5;
+		repo.updateVoteCount(reviewId);
+		Review review = repo.findById(reviewId).get();
+		
+		assertThat(review.getVotes()).isEqualTo(2);
 	}
 }
