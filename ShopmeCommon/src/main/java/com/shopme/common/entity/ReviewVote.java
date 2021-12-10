@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "reviews_votes")
@@ -58,5 +59,13 @@ public class ReviewVote extends IdBasedEntity {
 		return "ReviewVote [votes=" + votes + ", customer=" + customer.getFullName() + ", review=" + review.getId() + "]";
 	}
 	
+	@Transient
+	public boolean isUpvoted() {
+		return this.votes == VOTE_UP_POINT;
+	}
 	
+	@Transient
+	public boolean isDownvoted() {
+		return this.votes == VOTE_DOWN_POINT;
+	}	
 }
