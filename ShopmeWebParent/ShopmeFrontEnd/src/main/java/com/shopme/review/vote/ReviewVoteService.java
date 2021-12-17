@@ -1,5 +1,6 @@
 package com.shopme.review.vote;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
@@ -65,5 +66,25 @@ public class ReviewVoteService {
 		
 		return VoteResult.success("You have successfully voted " + voteType + " that review.", 
 				voteCount);
+	}
+	
+	public void markReviewsVotedForProductByCustomer(List<Review> listReviews, Integer productId,
+			Integer customerId) {
+		List<ReviewVote> listVotes = voteRepo.findByProductAndCustomer(productId, customerId);
+		
+		for (ReviewVote vote : listVotes) {
+			Review votedReview = vote.getReview();
+			
+			if (listReviews.contains(votedReview)) {
+				int index = listReviews.indexOf(votedReview);
+				Review review = listReviews.get(index);
+				
+				if (vote.isUpvoted()) {
+					review.setUpvotedByCurrentCustomer(true);
+				} else if (vote.isDownvoted()) {
+					review.setDownvotedByCurrentCustomer(true);
+				}
+			}
+		}
 	}
 }
