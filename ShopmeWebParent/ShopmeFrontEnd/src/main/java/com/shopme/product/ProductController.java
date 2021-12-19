@@ -77,7 +77,7 @@ public class ProductController {
 		try {
 			Product product = productService.getProduct(alias);
 			List<Category> listCategoryParents = categoryService.getCategoryParents(product.getCategory());
-			Page<Review> listReviews = reviewService.list3MostRecentReviewsByProduct(product);
+			Page<Review> listReviews = reviewService.list3MostVotedReviewsByProduct(product);
 			
 			Customer customer = controllerHelper.getAuthenticatedCustomer(request);
 			
